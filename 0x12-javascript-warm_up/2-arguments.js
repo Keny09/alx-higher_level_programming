@@ -1,7 +1,4 @@
 #!/usr/bin/node
-
-const args = process.argv.length;
-
 if (args.length === 2) {
   console.log("No argument");
 } else if (args.length === 3) {
