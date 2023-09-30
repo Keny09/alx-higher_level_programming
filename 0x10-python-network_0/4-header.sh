@@ -6,10 +6,8 @@ if [ -z "$1" ]; then
     exit 1
 fi
 
-# Define the URL and the header variable
-url="$1"
-header="X-School-User-Id: 98"
+# Send a GET request with the specified header
+response=$(curl -s -H "X-School-User-Id: 98" "$1")
 
-# Send a GET request to the URL with the header variable and display the body of the response
-response=$(curl -s -X GET -H "$header" "$url")
+# Display the body of the response
 echo "$response"
