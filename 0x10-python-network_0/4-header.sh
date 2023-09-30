@@ -1,4 +1,3 @@
-bash
 #!/bin/bash
 
 # Check if the URL is provided
