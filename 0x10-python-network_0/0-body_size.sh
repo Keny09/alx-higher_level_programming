@@ -8,22 +8,14 @@ fi
 
 url="$1"
 
-# Use curl to send a GET request and save the response body to a temporary file
-response_file=$(mktemp)
-curl -s -o "$response_file" "$url"
+# Use curl to send a GET request and retrieve the response body
+response_body=$(curl -sI "$url" | grep -i Content-Length | awk '{print $2}' | tr -d '\r')
 
 # Check if curl encountered any errors
 if [ $? -ne 0 ]; then
   echo "Error: Failed to retrieve the URL: $url"
-  rm -f "$response_file"
   exit 1
 fi
 
-# Get the size of the response body in bytes
-response_size=$(wc -c < "$response_file")
-
 # Display the size of the response body in bytes
-echo "Size of the response body: $response_size bytes"
-
-# Clean up the temporary response file
-rm -f "$response_file"
+echo "$response_body"
