@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 # Check if the URL is provided
-if [ -z "$1" ]; then
-    echo "Usage: $0 <URL>"
-    exit 1
+if [ $# -ne 1 ]; then
+  echo "Usage: $0 <URL>"
+  exit 1
 fi
 
 url="$1"
