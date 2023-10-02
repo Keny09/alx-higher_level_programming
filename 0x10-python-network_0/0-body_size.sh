@@ -8,8 +8,8 @@ fi
 
 url="$1"
 
-# Use curl to send a GET request and retrieve the response body
-response_body=$(curl -sI "$url" | grep -i Content-Length | awk '{print $2}' | tr -d '\r')
+# Use curl with -s (silent mode) to send a GET request and save the response body to a variable
+response_body=$(curl -s "$url")
 
 # Check if curl encountered any errors
 if [ $? -ne 0 ]; then
@@ -17,5 +17,9 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
+# Get the size of the response body in bytes
+response_size=$(echo -n "$response_body" | wc -c)
+
 # Display the size of the response body in bytes
-echo "$response_body"
+echo "$response_size"
+
