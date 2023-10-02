@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/python3
 # Check if the URL is provided
 if [ -z "$1" ]; then
     echo "Usage: $0 <URL>"
