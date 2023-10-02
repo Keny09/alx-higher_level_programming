@@ -5,6 +5,8 @@ if [ -z "$1" ]; then
     exit 1
 fi
 
+url="$1"
+
 # Send a request to the URL and get the size of the body of the response
 response_size=$(curl -sI "$1" | grep -i 'Content-Length' | awk '{print $2}')
 
