@@ -1,25 +1,19 @@
 #!/bin/bash
 
-# Check if the URL argument is provided
+# Check if the user provided a URL as an argument
 if [ $# -ne 1 ]; then
-  echo "Usage: $0 <URL>"
-  exit 1
+    echo "Usage: $0 <URL>"
+    exit 1
 fi
 
+# Store the URL provided as an argument
 url="$1"
 
-# Use curl with -s (silent mode) to send a GET request and save the response body to a variable
-response_body=$(curl -s "$url")
-
-# Check if curl encountered any errors
-if [ $? -ne 0 ]; then
-  echo "Error: Failed to retrieve the URL: $url"
-  exit 1
-fi
+# Send a request to the URL using curl and store the response in a variable
+response=$(curl -s "$url")
 
 # Get the size of the response body in bytes
-response_size=$(echo -n "$response_body" | wc -c)
+response_size=$(echo -n "$response" | wc -c)
 
-# Display the size of the response body in bytes
-echo "$response_size"
-
+# Display the size of the response body
+echo "Response body size: $response_size bytes"
