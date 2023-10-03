@@ -1,30 +1,21 @@
-import requests
-import sys
+#!/usr/bin/python3
+"""
+Python script that takes your GitHub credentials (username and password)
+and uses the GitHub API to display your id
+"""
 
-# Check if a username and personal access token are provided as arguments
-if len(sys.argv) < 3:
-    print("Usage: python script.py <username> <personal_access_token>")
-    sys.exit(1)
 
-username = sys.argv[1]
-token = sys.argv[2]
+if __name__ == "__main__":
+    import requests
+    import sys
 
-# Define the GitHub API endpoint for user information
-url = f"https://api.github.com/user"
-
-try:
-    # Set up the authentication headers using Basic Authentication
-    auth = (username, token)
-    
-    # Send a GET request to the GitHub API
-    response = requests.get(url, auth=auth)
-    
-    # Check if the request was successful (status code 200)
-    if response.status_code == 200:
-        user_info = response.json()
-        user_id = user_info["id"]
-        print(f"GitHub User ID: {user_id}")
-    else:
-        print(f"Error: {response.status_code} - Failed to fetch user information.")
-except requests.exceptions.RequestException as e:
-    print("Error:", e)
+    username = sys.argv[1]
+    password = sys.argv[2]
+    url = "https://api.github.com/users/{}".format(username)
+    """
+    headers = {"Authorization": f"Basic {username}:{password}"}
+    """
+    retrieved = requests.get(url, auth=(username, password))
+    json_data = retrieved.json()
+    user_id = json_data.get("id")
+    print(user_id)

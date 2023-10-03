@@ -1,22 +1,17 @@
-import requests
-import sys
+#!/usr/bin/python3
+"""
+Python script that takes in URL, sends request to it
+and displays the body of the response.
+"""
 
-# Check if a URL is provided as an argument
-if len(sys.argv) < 2:
-    print("Usage: python script.py <URL>")
-    sys.exit(1)
 
-url = sys.argv[1]
+if __name__ == "__main__":
+    import requests
+    import sys
 
-try:
-    # Send a GET request to the URL
-    response = requests.get(url)
-    
-    # Display the body of the response
-    print(response.text)
-    
-    # Check the HTTP status code
-    if response.status_code >= 400:
-        print(f"Error code: {response.status_code}")
-except requests.exceptions.RequestException as e:
-    print("Error:", e)
+    url = sys.argv[1]
+    retrieved = requests.get(url)
+    if retrieved.status_code >= 400:
+        print("Error code: {}".format(retrieved.status_code))
+    else:
+        print(retrieved.text)

@@ -1,35 +1,25 @@
-import requests
-import sys
+#!/usr/bin/python3
+"""
+Python script that takes a letter and sends a POST request to
+http://0.0.0.0:5000/search_user with the letter as a parameter.
+"""
 
-# Check if a letter is provided as an argument
-if len(sys.argv) < 2:
-    q = ""
-else:
-    q = sys.argv[1]
 
-# Define the URL
-url = "http://0.0.0.0:5000/search_user"
+if __name__ == "__main__":
+    import requests
+    import sys
 
-# Define the data payload with the 'q' parameter
-data = {"q": q}
-
-try:
-    # Send a POST request to the URL with the 'q' parameter
-    response = requests.post(url, data=data)
-    
-    # Check if the response body is JSON formatted and not empty
-    if response.headers.get('content-type') == 'application/json':
-        try:
-            result = response.json()
-            if result:
-                user_id = result.get("id")
-                user_name = result.get("name")
-                print(f"[{user_id}] {user_name}")
-            else:
-                print("No result")
-        except ValueError:
-            print("Not a valid JSON")
-    else:
-        print("No result")
-except requests.exceptions.RequestException as e:
-    print("Error:", e)
+    url = "http://0.0.0.0:5000/search_user"
+    letter = ""
+    if len(sys.argv) > 1:
+        letter += sys.argv[1]
+    data = {'q': letter}
+    retrieved = requests.post(url, data)
+    try:
+        json_data = retrieved.json()
+        if json_data:
+            print("[{}] {}".format(json_data['id'], json_data['name']))
+        else:
+            print("No result")
+    except ValueError:
+        print("Not a valid JSON")

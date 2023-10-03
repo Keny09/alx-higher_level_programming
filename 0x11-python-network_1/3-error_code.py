@@ -1,19 +1,20 @@
-import urllib.request
-import urllib.error
-import sys
+#!/usr/bin/python3
+"""
+Python script that takes in a URL, sends request to the URL and displays the
+value of the X-Request-Id variable found in header response.
+"""
 
-def send_post_request(url, email):
-    data = urllib.parse.urlencode({'email': email})
-    data = data.encode('utf-8')
-
-    try:
-        with urllib.request.urlopen(url, data) as response:
-            body = response.read().decode('utf-8')
-            print(body)
-    except urllib.error.HTTPError as e:
-        print(f"Error code: {e.code}")
 
 if __name__ == "__main__":
+    import sys
+    import urllib.request
+    import urllib.parse
+
     url = sys.argv[1]
-    email = sys.argv[2]
-    send_post_request(url, email)
+    try:
+        req = urllib.request.Request(url)
+        with urllib.request.urlopen(req) as response:
+            returned = response.read().decode('utf-8')
+        print(returned)
+    except urllib.error.URLError as e:
+        print("Error code: {}".format(e.code))
