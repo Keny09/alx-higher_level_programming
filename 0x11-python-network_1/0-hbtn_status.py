@@ -1,4 +1,3 @@
-python
 import urllib.request
 
 try:
