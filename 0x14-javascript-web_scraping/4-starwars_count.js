@@ -11,7 +11,7 @@ request(requestURL, (err, response, body) => {
   let count = 0;
   results.forEach(result => {
     result.characters.forEach(character => {
-      if (character === 'https://swapi.co/api/people/18/') {
+      if (character === 'https://swapi-api.alx-tools.com/api/films/18') {
         count++;
       }
     });
