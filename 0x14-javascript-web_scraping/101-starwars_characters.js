@@ -1,20 +1,23 @@
 #!/usr/bin/node
-// prints all charaters in starwar movie
 
+const urlPath = 'https://swapi-api.alx-tools.com/api/films/' + process.argv[2];
 const request = require('request');
-const requestURL = 'https://swapi.co/api/films/' + process.argv[2];
+const util = require('util');
+const promiseRequest = util.promisify(request.get);
 
-const req = (list, i) => {
-  if (i === list.length) return;
-  request(list[i], (error, response, data) => {
-    if (error) throw error;
-    console.log(JSON.parse(data).name);
-    req(list, i + 1);
-  });
-};
+async function orderedRequest (myUrl) {
+  const response = await promiseRequest(myUrl);
+  const person = JSON.parse(response.body);
+  console.log(person.name);
+}
 
-request(requestURL, (err, response, body) => {
-  if (err) throw err;
-  const dict = JSON.parse(body);
-  req(dict.characters, 0);
+request.get(urlPath, async (error, response, body) => {
+  if (error) {
+    console.log('');
+  } else {
+    const data = JSON.parse(body);
+    for (const urlPerson of data.characters) {
+      await orderedRequest(urlPerson);
+    }
+  }
 });
